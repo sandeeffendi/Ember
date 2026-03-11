@@ -7,13 +7,6 @@ import Foundation
 import SwiftUI
 internal import Combine
 
-struct WeekDay: Identifiable {
-    let id = UUID()
-    let date: Date
-    let label: String        // "Mon", "Tue", etc.
-    let hasCheckIn: Bool
-}
-
 @MainActor
 final class WeeklyReportViewModel: ObservableObject {
 
@@ -40,18 +33,15 @@ final class WeeklyReportViewModel: ObservableObject {
         let calendar = Calendar.current
         let today = calendar.startOfDay(for: Date())
 
-        // Find Monday of the current week
         let weekday = calendar.component(.weekday, from: today)
-        // In Calendar, weekday 1 = Sunday. Offset to Monday-based.
         let daysFromMonday = (weekday + 5) % 7
         guard let monday = calendar.date(byAdding: .day, value: -daysFromMonday, to: today) else {
             return []
         }
 
         let formatter = DateFormatter()
-        formatter.dateFormat = "EEE" // Mon, Tue, …
+        formatter.dateFormat = "EEE"
 
-        // Build a set of calendar dates that have at least one check-in
         let checkedDates = Set(checkIns.map { $0.calendarDate })
 
         return (0..<7).compactMap { offset in
@@ -59,7 +49,8 @@ final class WeeklyReportViewModel: ObservableObject {
             return WeekDay(
                 date: day,
                 label: formatter.string(from: day),
-                hasCheckIn: checkedDates.contains(day)
+                hasCheckIn: checkedDates.contains(day),
+                dayNumber: calendar.component(.day, from: day)
             )
         }
     }

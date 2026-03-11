@@ -50,7 +50,10 @@ struct PrimaryButton_Previews: PreviewProvider {
     static var previews: some View {
         VStack(spacing: 16) {
             PrimaryButton(title: "Start Assessment") {}
-            PrimaryButton(title: "Disabled Button", isEnabled: false) {}
+            PrimaryButton(
+                title: "Disabled Button",
+                action:  {
+                }, isEnabled: false)
         }
         .padding()
     }

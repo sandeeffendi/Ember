@@ -30,6 +30,31 @@ enum CheckInPhase: String, Codable, CaseIterable {
     }
 
     var label: String { rawValue }
+    
+    var timeRange: String {
+        switch self {
+        case .morning: return "05:00 - 11:00"
+        case .midday: return "11:00 - 17:00"
+        case .shutdown: return "17:00 - 23:00"
+        }
+    }
+    
+    var isAvailable: Bool {
+        let hour = Calendar.current.component(.hour, from: Date())
+        switch self {
+        case .morning: return hour >= 5 && hour < 11
+        case .midday: return hour >= 11 && hour < 17
+        case .shutdown: return hour >= 17 && hour < 23
+        }
+    }
+    
+    var nextPhase: CheckInPhase? {
+        switch self {
+        case .morning: return .midday
+        case .midday: return .shutdown
+        case .shutdown: return nil
+        }
+    }
 }
 
 /// A single daily check-in entry recording mental state for one phase.
@@ -44,5 +69,12 @@ struct DailyCheckIn: Codable, Identifiable {
     /// Normalized date (midnight) for calendar comparison.
     var calendarDate: Date {
         Calendar.current.startOfDay(for: date)
+    }
+    
+    /// Session key for uniqueness (date + phase)
+    var sessionKey: String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        return "\(formatter.string(from: calendarDate))_\(phase.rawValue)"
     }
 }

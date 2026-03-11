@@ -387,4 +387,23 @@ Implementasi harus mengikuti prinsip berikut:
 - clean SwiftUI views
 - pragmatic architecture
 
-Aplikasi harus dirancang sebagai **MVP yang dapat di-scale pada iterasi berikutnya**.
+## Weekly Report
+
+The application provides a weekly summary of user wellness activity.
+
+The weekly report aggregates data from:
+
+- daily check-in
+- assessment results
+- habit completion
+
+The weekly report must display:
+
+- weekly mood trend
+- check-in completion rate
+- wellness insights
+- suggested actions
+
+Weekly reports are organized by calendar week.
+
+Aplikasi harus dirancang sebagai **Production ready yang dapat di-scale pada iterasi berikutnya**.

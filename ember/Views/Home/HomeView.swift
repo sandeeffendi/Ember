@@ -2,6 +2,8 @@
 //  HomeView.swift
 //  ember
 //
+//  Main home screen
+//
 
 import SwiftUI
 
@@ -12,58 +14,71 @@ struct HomeView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                VStack(spacing: 24) {
-
-                    // MARK: - Header
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text(viewModel.greeting)
-                            .font(.title2)
-                            .fontWeight(.semibold)
-
-                        Text("How are you feeling today?")
-                            .font(.subheadline)
-                            .foregroundStyle(.secondary)
-                    }
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.horizontal)
-                    .padding(.top, 8)
-
-                    // MARK: - Activity Cards
-                    VStack(spacing: 14) {
-                        CardView(
-                            title: "Daily Check-In",
-                            subtitle: "Record your mood, energy & stress",
-                            icon: "checkmark.circle.fill",
-                            color: .teal
-                        ) {
-                            CheckInView()
-                        }
-
-                        CardView(
-                            title: "Weekly Report",
-                            subtitle: "View your wellbeing trends",
-                            icon: "chart.bar.fill",
-                            color: .indigo
-                        ) {
-                            WeeklyReportView()
-                        }
-                    }
-                    .padding(.horizontal)
-
-                    Spacer(minLength: 40)
+                VStack(spacing: Spacing.lg) {
+                    headerSection
+                    
+                    cardsSection
+                    
+                    Spacer(minLength: Spacing.xl)
                 }
-                .padding(.top, 8)
+                .padding(.top, Spacing.sm)
             }
+            .background(Color.AppColors.background.ignoresSafeArea())
             .navigationTitle("Ember")
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     NavigationLink(destination: ProfileView()) {
                         Image(systemName: "person.circle.fill")
                             .font(.title2)
-                            .foregroundStyle(.tint)
+                            .foregroundColor(Color.AppColors.primary)
                     }
                 }
             }
+            .refreshable {
+                viewModel.refresh()
+            }
         }
+    }
+    
+    // MARK: - Header Section
+    private var headerSection: some View {
+        VStack(alignment: .leading, spacing: Spacing.xs) {
+            Text(viewModel.greeting)
+                .font(Font.AppTypography.title2)
+                .fontWeight(.semibold)
+                .foregroundColor(Color.AppColors.textPrimary)
+
+            Text("How are you feeling today?")
+                .font(.subheadline)
+                .foregroundColor(Color.AppColors.textSecondary)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.horizontal, Spacing.md)
+    }
+    
+    // MARK: - Cards Section
+    private var cardsSection: some View {
+        VStack(spacing: Spacing.sm) {
+            DailyCheckInCard(
+                currentPhase: viewModel.currentPhase,
+                currentStreak: viewModel.currentStreak,
+                phaseGreeting: viewModel.phaseGreeting,
+                phaseStatus: viewModel.phaseStatus
+            ) {
+                CheckInView()
+            }
+
+            WeeklyReportCard(
+                weekLabel: viewModel.weekLabel,
+                completionRate: viewModel.completionRate,
+                weekDays: viewModel.weekDays,
+                averageMood: viewModel.averageMood,
+                averageEnergy: viewModel.averageEnergy,
+                averageStress: viewModel.averageStress
+            ) {
+                WeeklyReportView()
+            }
+        }
+        .padding(.horizontal, Spacing.md)
     }
 }

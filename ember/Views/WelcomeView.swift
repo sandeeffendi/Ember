@@ -31,17 +31,13 @@ struct WelcomeView: View {
                         .padding(.horizontal, Spacing.lg)
                 }
 
-                VStack(spacing: Spacing.sm) {
-                    InfoRow(icon: "list.number", text: "8 pertanyaan singkat")
-                    InfoRow(icon: "clock", text: "Selesai dalam 2–3 menit")
-                    InfoRow(icon: "brain.head.profile", text: "Dianalisis oleh AI berbasis MBI")
+                AppCard(elevation: .low) {
+                    VStack(spacing: Spacing.sm) {
+                        InfoRow(icon: "list.number", text: "8 pertanyaan singkat")
+                        InfoRow(icon: "clock", text: "Selesai dalam 2–3 menit")
+                        InfoRow(icon: "brain.head.profile", text: "Dianalisis oleh AI berbasis MBI")
+                    }
                 }
-                .padding(Spacing.lg)
-                .background(
-                    RoundedRectangle(cornerRadius: CornerRadius.large)
-                        .fill(Color.AppColors.cardBackground)
-                        .shadow(color: Color.black.opacity(0.05), radius: 10, x: 0, y: 2)
-                )
                 .padding(.horizontal, Spacing.md)
 
                 Spacer()
