@@ -11,12 +11,12 @@
 
     @main
     struct EmberApp: App {
-        @StateObject private var viewModel = AssessmentViewModel()
+        @StateObject private var appViewModel = AppViewModel()
 
         var body: some Scene {
             WindowGroup {
                 ContentView()
-                    .environmentObject(viewModel)
+                    .environmentObject(appViewModel)
             }
         }
     }
