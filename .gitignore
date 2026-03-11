@@ -1,0 +1,69 @@
+# =========================
+# macOS
+# =========================
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# =========================
+# Xcode user data
+# =========================
+xcuserdata/
+*.xcuserstate
+*.xcscmblueprint
+
+# =========================
+# Xcode workspace user data
+# =========================
+*.xcworkspace/xcuserdata/
+
+# =========================
+# Build files
+# =========================
+build/
+DerivedData/
+
+# =========================
+# Swift Package Manager
+# =========================
+.swiftpm/
+.build/
+
+# =========================
+# CocoaPods
+# =========================
+Pods/
+Podfile.lock
+
+# =========================
+# Carthage
+# =========================
+Carthage/Build/
+
+# =========================
+# Fastlane
+# =========================
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/
+fastlane/test_output/
+
+# =========================
+# Secrets / config files
+# =========================
+Secrets.config
+*.env
+.env.*
+
+# =========================
+# Logs
+# =========================
+*.log
+
+# =========================
+# Temporary files
+# =========================
+*.swp
+*.tmp
+
+Secrets.xcconfig
